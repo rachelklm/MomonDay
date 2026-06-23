@@ -1,0 +1,1555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>A Birthday Surprise For You 🎂</title>
+
+  <!-- =====================================================
+       GOOGLE FONTS — Cozy & elegant Snoopy-style pairing
+       Playfair Display = display/title
+       Nunito = body text (round, warm, readable)
+  ====================================================== -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ==========================================================
+       CSS CUSTOM PROPERTIES — Snoopy Palette
+    ========================================================== */
+    :root {
+      --sky-deep:   #a8d4f5;   /* deep baby blue */
+      --sky-mid:    #c9e8fc;   /* mid pastel blue */
+      --sky-pale:   #e8f5fe;   /* almost white blue */
+      --white:      #ffffff;
+      --yellow:     #fde877;   /* peanuts yellow accent */
+      --yellow-soft:#fdf3c0;
+      --blue-dark:  #4a90c4;   /* darker blue for contrast */
+      --text-main:  #2d5f8a;   /* dark blue text */
+      --text-soft:  #6daad6;
+      --red-heart:  #f4718f;   /* heart color */
+      --shadow:     rgba(74, 144, 196, 0.18);
+      --shadow-lg:  rgba(74, 144, 196, 0.28);
+    }
+
+    /* ==========================================================
+       RESET & BASE
+    ========================================================== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; font-size: 16px; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--sky-pale);
+      color: var(--text-main);
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    /* ---- Utility ---- */
+    .hidden  { display: none !important; }
+    .fade-in { animation: fadeIn 0.8s ease forwards; }
+    .fade-out{ animation: fadeOut 0.5s ease forwards; }
+
+    @keyframes fadeIn  { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
+
+    /* ==========================================================
+       FLOATING BACKGROUND PARTICLES  (stars + dots)
+    ========================================================== */
+    #bg-particles {
+      position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden;
+    }
+    .particle {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0;
+      animation: floatParticle linear infinite;
+    }
+
+    @keyframes floatParticle {
+      0%   { opacity: 0; transform: translateY(0) scale(0.8); }
+      10%  { opacity: 0.6; }
+      90%  { opacity: 0.4; }
+      100% { opacity: 0; transform: translateY(-110vh) scale(1.1); }
+    }
+
+    /* ==========================================================
+       SECTION WRAPPER — every "screen" is a full-height section
+    ========================================================== */
+    .screen {
+      position: relative;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1.25rem;
+      z-index: 1;
+    }
+
+    /* ==========================================================
+       ██  LANDING / HERO SECTION
+    ========================================================== */
+    #screen-landing {
+      /* ======================================================
+         BACKGROUND IMAGE — replace the URL below with your
+         own Pinterest image URL or any direct image URL.
+         Example: background-image: url('https://i.pinimg.com/736x/xx/yy/zz.jpg');
+         Keep background-size: cover and background-position: center.
+      ====================================================== */
+      background-image:
+        linear-gradient(160deg, rgba(200,232,252,0.82) 0%, rgba(168,212,245,0.88) 100%),
+        url('https://www.image2url.com/r2/default/images/1782209909982-3338e206-bf7c-4d9e-9147-d2b95d36ee3b.jpg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      text-align: center;
+    }
+
+    .hero-card {
+      background: rgba(255,255,255,0.72);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-radius: 32px;
+      padding: 3.5rem 2.5rem;
+      max-width: 560px;
+      width: 100%;
+      box-shadow: 0 8px 48px var(--shadow-lg), 0 2px 8px var(--shadow);
+      border: 2px solid rgba(255,255,255,0.7);
+      animation: heroEntrance 1.1s cubic-bezier(.22,1,.36,1) both;
+    }
+
+    @keyframes heroEntrance {
+      from { opacity: 0; transform: translateY(40px) scale(0.95); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    /* ---- Snoopy SVG illustration ---- */
+    .snoopy-hero {
+      margin-bottom: 1.5rem;
+      animation: snoopyFloat 3.5s ease-in-out infinite;
+    }
+    @keyframes snoopyFloat {
+      0%,100% { transform: translateY(0); }
+      50%      { transform: translateY(-10px); }
+    }
+
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      color: var(--text-main);
+      line-height: 1.25;
+      margin-bottom: 0.75rem;
+    }
+    .hero-subtitle {
+      font-size: 1rem;
+      color: var(--text-soft);
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: linear-gradient(135deg, var(--blue-dark), var(--sky-deep));
+      color: #fff;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      padding: 0.85rem 2.2rem;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 4px 20px var(--shadow-lg);
+      transition: transform 0.2s, box-shadow 0.2s;
+      letter-spacing: 0.02em;
+    }
+    .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 8px 28px var(--shadow-lg); }
+    .btn-primary:active { transform: translateY(0); }
+
+    /* paw-print dots decoration */
+    .paw-row {
+      display: flex; gap: 0.4rem; justify-content: center;
+      margin-top: 1.8rem; opacity: 0.35;
+    }
+    .paw-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--blue-dark);
+    }
+
+    /* ==========================================================
+       ██  MINI GAME SECTION
+    ========================================================== */
+    #screen-game {
+      background: linear-gradient(160deg, var(--sky-mid), var(--sky-pale));
+    }
+
+    .game-ui {
+      text-align: center;
+      max-width: 520px;
+      width: 100%;
+    }
+
+    .game-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.4rem, 3.5vw, 2rem);
+      margin-bottom: 0.5rem;
+      color: var(--text-main);
+    }
+    .game-subtitle { color: var(--text-soft); margin-bottom: 1.5rem; font-size: 0.95rem; }
+
+    .progress-bar-wrap {
+      background: rgba(255,255,255,0.6);
+      border-radius: 50px;
+      height: 12px;
+      margin: 0 auto 0.6rem;
+      max-width: 280px;
+      overflow: hidden;
+      box-shadow: inset 0 1px 4px var(--shadow);
+    }
+    .progress-bar-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--red-heart), #f9a8c0);
+      border-radius: 50px;
+      transition: width 0.4s cubic-bezier(.4,0,.2,1);
+    }
+    .progress-label {
+      font-weight: 700;
+      color: var(--red-heart);
+      font-size: 1rem;
+      margin-bottom: 1.2rem;
+    }
+
+    /* game arena */
+    #game-arena {
+      position: relative;
+      width: 100%;
+      max-width: 420px;
+      height: 320px;
+      margin: 0 auto;
+      background: rgba(255,255,255,0.45);
+      border-radius: 24px;
+      border: 2px dashed rgba(100,160,210,0.35);
+      overflow: hidden;
+      box-shadow: 0 4px 24px var(--shadow);
+    }
+
+    /* floating heart targets */
+    .heart-target {
+      position: absolute;
+      width: 52px;
+      height: 52px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      user-select: none;
+      -webkit-user-select: none;
+      filter: drop-shadow(0 2px 6px rgba(244,113,143,0.4));
+      animation: heartBounce var(--dur, 3s) ease-in-out infinite;
+      transition: transform 0.1s;
+    }
+    .heart-target:hover { transform: scale(1.15); }
+    .heart-target.collected {
+      animation: heartCollect 0.45s cubic-bezier(.4,0,.2,1) forwards !important;
+      pointer-events: none;
+    }
+    @keyframes heartBounce {
+      0%,100% { transform: translateY(0) rotate(-5deg); }
+      50%      { transform: translateY(-14px) rotate(5deg); }
+    }
+    @keyframes heartCollect {
+      0%   { transform: scale(1); opacity: 1; }
+      60%  { transform: scale(1.7); opacity: 0.8; }
+      100% { transform: scale(0) translateY(-30px); opacity: 0; }
+    }
+
+    /* collect sparkle burst */
+    .sparkle-burst {
+      position: absolute;
+      pointer-events: none;
+      width: 60px; height: 60px;
+      z-index: 10;
+    }
+
+    /* ==========================================================
+       ██  POPUP — game unlock
+    ========================================================== */
+    .popup-overlay {
+      position: fixed; inset: 0;
+      background: rgba(45,95,138,0.35);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      z-index: 100;
+      display: flex; align-items: center; justify-content: center;
+      padding: 1.5rem;
+    }
+
+    .popup-card {
+      background: #fff;
+      border-radius: 28px;
+      padding: 2.5rem 2rem;
+      max-width: 380px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 16px 64px rgba(74,144,196,0.25);
+      animation: popupIn 0.5s cubic-bezier(.22,1,.36,1) both;
+    }
+    @keyframes popupIn {
+      from { opacity: 0; transform: scale(0.8) translateY(30px); }
+      to   { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    .popup-emoji { font-size: 3rem; margin-bottom: 0.75rem; display: block; }
+    .popup-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      color: var(--text-main);
+      margin-bottom: 0.5rem;
+    }
+    .popup-body { color: var(--text-soft); font-size: 0.95rem; line-height: 1.6; margin-bottom: 1.6rem; }
+
+    /* ==========================================================
+       ██  LETTER / ENVELOPE SECTION
+    ========================================================== */
+    #screen-letter {
+      background: linear-gradient(160deg, var(--sky-pale) 0%, #d4ecfa 100%);
+    }
+
+    .letter-container {
+      display: flex; flex-direction: column; align-items: center;
+      gap: 1.5rem; max-width: 560px; width: 100%;
+      text-align: center;
+    }
+
+    .section-eyebrow {
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-soft);
+    }
+    .section-heading {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.4rem, 3.5vw, 2rem);
+      color: var(--text-main);
+      margin-bottom: 0.25rem;
+    }
+
+    /* ---- ENVELOPE ---- */
+    .envelope-wrap {
+      position: relative;
+      width: min(280px, 80vw);
+      cursor: pointer;
+    }
+
+    .envelope {
+      width: 100%;
+      aspect-ratio: 5/3.4;
+      position: relative;
+    }
+
+    /* Envelope SVG */
+    .envelope svg { width: 100%; height: 100%; overflow: visible; }
+
+    /* letter peek-out */
+    .letter-paper {
+      position: absolute;
+      left: 8%; right: 8%;
+      bottom: 8%;
+      height: 50%;
+      background: linear-gradient(180deg, var(--yellow-soft), #fff);
+      border-radius: 6px 6px 0 0;
+      box-shadow: 0 -4px 12px var(--shadow);
+      transform-origin: bottom center;
+      transform: scaleY(0);
+      transition: transform 0.6s cubic-bezier(.22,1,.36,1) 0.2s;
+      z-index: 2;
+    }
+    .envelope-wrap.opened .letter-paper {
+      transform: scaleY(1) translateY(-110%);
+    }
+
+    .envelope-hint {
+      margin-top: 0.75rem;
+      font-size: 0.85rem;
+      color: var(--text-soft);
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+    /* ---- LETTER CARD ---- */
+    .letter-card {
+      background: rgba(255,255,255,0.88);
+      backdrop-filter: blur(12px);
+      border-radius: 24px;
+      padding: 2.5rem 2rem;
+      max-width: 520px;
+      width: 100%;
+      box-shadow: 0 6px 40px var(--shadow-lg);
+      border: 2px solid rgba(255,255,255,0.7);
+      text-align: left;
+      position: relative;
+      overflow: hidden;
+    }
+    .letter-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 4px;
+      background: linear-gradient(90deg, var(--sky-deep), var(--yellow), var(--red-heart), var(--sky-deep));
+      background-size: 200% auto;
+      animation: shimmer 3s linear infinite;
+    }
+    @keyframes shimmer { to { background-position: 200% center; } }
+
+    .letter-salutation {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.1rem;
+      color: var(--blue-dark);
+      margin-bottom: 1rem;
+    }
+    .letter-body {
+      font-size: 0.97rem;
+      line-height: 1.85;
+      color: var(--text-main);
+      min-height: 80px;
+    }
+    .letter-body .cursor {
+      display: inline-block;
+      width: 2px; height: 1em;
+      background: var(--text-main);
+      margin-left: 2px;
+      vertical-align: text-bottom;
+      animation: blink 0.8s step-end infinite;
+    }
+    @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
+
+    .letter-sign {
+      margin-top: 1.5rem;
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1rem;
+      color: var(--blue-dark);
+      opacity: 0;
+      transition: opacity 0.8s;
+    }
+
+    /* yellow dots decoration */
+    .dots-deco {
+      position: absolute;
+      right: 1rem; bottom: 1rem;
+      display: grid; grid-template-columns: repeat(3,1fr); gap: 5px;
+    }
+    .dots-deco span {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--yellow);
+    }
+
+    /* ---- Thank you & hug section ---- */
+    .thankyou-wrap {
+      text-align: center;
+      max-width: 440px;
+      animation: fadeIn 1s ease both;
+    }
+    .thankyou-quote {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.1rem, 3vw, 1.5rem);
+      color: var(--text-main);
+      margin-bottom: 1.5rem;
+      line-height: 1.5;
+    }
+    .btn-hug {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: linear-gradient(135deg, var(--red-heart), #f9a8c0);
+      color: #fff;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      padding: 0.85rem 2rem;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(244,113,143,0.35);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-hug:hover { transform: translateY(-3px); box-shadow: 0 8px 28px rgba(244,113,143,0.45); }
+
+    /* ==========================================================
+       ██  MUSIC PLAYER
+    ========================================================== */
+    #music-btn {
+      position: fixed;
+      bottom: 1.4rem; right: 1.4rem;
+      z-index: 200;
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(10px);
+      border: 2px solid var(--sky-deep);
+      border-radius: 50px;
+      padding: 0.6rem 1.1rem;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--text-main);
+      cursor: pointer;
+      display: flex; align-items: center; gap: 0.45rem;
+      box-shadow: 0 4px 18px var(--shadow);
+      transition: transform 0.2s;
+    }
+    #music-btn:hover { transform: scale(1.05); }
+    .music-note { font-size: 1.1rem; animation: noteSway 1.2s ease-in-out infinite; }
+    @keyframes noteSway { 0%,100% { transform: rotate(-8deg); } 50% { transform: rotate(8deg); } }
+
+    /* ==========================================================
+       ██  CONFETTI
+    ========================================================== */
+    #confetti-canvas {
+      position: fixed; inset: 0;
+      pointer-events: none;
+      z-index: 300;
+    }
+
+    /* ==========================================================
+       ██  HUG MODAL
+    ========================================================== */
+    #hug-modal .popup-card {
+      max-width: 400px;
+    }
+    .heart-rain-canvas {
+      position: fixed; inset: 0;
+      pointer-events: none;
+      z-index: 299;
+    }
+
+    /* ==========================================================
+       RESPONSIVE TWEAKS
+    ========================================================== */
+    @media (max-width: 480px) {
+      .hero-card { padding: 2.5rem 1.5rem; border-radius: 24px; }
+      .letter-card { padding: 2rem 1.25rem; }
+      #game-arena { height: 260px; }
+    }
+
+    /* ---- Stars decorations (static) ---- */
+    .star-deco {
+      position: absolute;
+      pointer-events: none;
+      opacity: 0.55;
+      animation: starTwinkle 2.5s ease-in-out infinite;
+    }
+    @keyframes starTwinkle { 0%,100% { opacity: 0.55; transform: scale(1); } 50% { opacity: 1; transform: scale(1.3); } }
+
+    /* scrollbar nicety */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--sky-pale); }
+    ::-webkit-scrollbar-thumb { background: var(--sky-mid); border-radius: 6px; }
+
+    /* ==========================================================
+       ██  PHOTO GALLERY — Scrapbook / Polaroid Style
+    ========================================================== */
+
+    /* ---- Gallery wrapper ---- */
+    .photo-gallery-section {
+      margin: 1.8rem 0 1.2rem;
+      text-align: center;
+    }
+
+    .gallery-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      color: var(--blue-dark);
+      margin-bottom: 1.2rem;
+      font-style: italic;
+      letter-spacing: 0.01em;
+    }
+
+    /* ---- Row of polaroids ---- */
+    .polaroid-row {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      gap: 1.8rem;
+      flex-wrap: wrap;
+    }
+
+    /* ---- Individual polaroid card ---- */
+    .polaroid-card {
+      position: relative;
+      background: #fff;
+      padding: 10px 10px 36px 10px;
+      border-radius: 6px;
+      box-shadow:
+        0 6px 24px rgba(74,144,196,0.22),
+        0 2px 8px rgba(74,144,196,0.14);
+      cursor: pointer;
+      transition: transform 0.32s cubic-bezier(.22,1,.36,1), box-shadow 0.3s ease;
+      width: 180px;
+      flex-shrink: 0;
+    }
+
+    /* Slight tilt: left photo tilts left, right photo tilts right */
+    .polaroid-card.tilt-left  { transform: rotate(-3.5deg); }
+    .polaroid-card.tilt-right { transform: rotate(3.2deg); }
+
+    .polaroid-card.tilt-left:hover {
+      transform: rotate(0deg) translateY(-8px) scale(1.04);
+      box-shadow: 0 16px 40px rgba(74,144,196,0.32), 0 4px 12px rgba(74,144,196,0.18);
+      z-index: 5;
+    }
+    .polaroid-card.tilt-right:hover {
+      transform: rotate(0deg) translateY(-8px) scale(1.04);
+      box-shadow: 0 16px 40px rgba(74,144,196,0.32), 0 4px 12px rgba(74,144,196,0.18);
+      z-index: 5;
+    }
+
+    /* ---- Photo inside polaroid ---- */
+    .polaroid-img {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      border-radius: 3px;
+      display: block;
+    }
+
+    /* ---- Caption line ---- */
+    .polaroid-caption {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 0.72rem;
+      color: var(--text-soft);
+      text-align: center;
+      margin-top: 6px;
+      line-height: 1.3;
+    }
+
+    /* ---- Snoopy sticker decorations on each card ---- */
+    .polaroid-sticker {
+      position: absolute;
+      font-size: 1.3rem;
+      pointer-events: none;
+      filter: drop-shadow(0 1px 3px rgba(0,0,0,0.15));
+      animation: stickerWiggle 3s ease-in-out infinite;
+    }
+    @keyframes stickerWiggle {
+      0%,100% { transform: rotate(-8deg) scale(1); }
+      50%      { transform: rotate(8deg) scale(1.08); }
+    }
+
+    /* Sticker placements per card */
+    .polaroid-card .s1 { top: -14px; right: -10px; animation-delay: 0s; }
+    .polaroid-card .s2 { bottom: 28px; left: -12px; animation-delay: 0.6s; }
+    .polaroid-card .s3 { top: -10px; left: -8px; animation-delay: 1.1s; }
+
+    /* ---- Gallery footer text ---- */
+    .gallery-footer {
+      margin-top: 1.4rem;
+      font-size: 0.82rem;
+      color: var(--text-soft);
+      font-style: italic;
+      line-height: 1.5;
+    }
+
+    /* ==========================================================
+       ██  PHOTO LIGHTBOX MODAL
+    ========================================================== */
+    #photo-lightbox {
+      position: fixed; inset: 0;
+      background: rgba(20, 45, 72, 0.82);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      cursor: pointer;
+      animation: fadeIn 0.25s ease both;
+    }
+
+    #photo-lightbox .lightbox-inner {
+      position: relative;
+      max-width: min(88vw, 500px);
+      animation: lightboxZoom 0.35s cubic-bezier(.22,1,.36,1) both;
+      cursor: default;
+    }
+
+    @keyframes lightboxZoom {
+      from { opacity: 0; transform: scale(0.82); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+
+    #photo-lightbox img {
+      width: 100%;
+      border-radius: 10px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.45);
+      display: block;
+    }
+
+    #photo-lightbox .lightbox-close {
+      position: absolute;
+      top: -14px;
+      right: -14px;
+      width: 36px;
+      height: 36px;
+      background: #fff;
+      border-radius: 50%;
+      border: none;
+      font-size: 1.1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.25);
+      color: var(--text-main);
+      transition: transform 0.2s;
+    }
+    #photo-lightbox .lightbox-close:hover { transform: scale(1.15) rotate(90deg); }
+
+    /* ---- Mobile stacking ---- */
+    @media (max-width: 480px) {
+      .polaroid-row {
+        flex-direction: column;
+        align-items: center;
+        gap: 2.2rem;
+      }
+      .polaroid-card {
+        width: 200px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- =============================================================
+     BACKGROUND PARTICLES
+============================================================== -->
+<div id="bg-particles"></div>
+
+<!-- =============================================================
+     CONFETTI CANVAS (global)
+============================================================== -->
+<canvas id="confetti-canvas"></canvas>
+
+<!-- =============================================================
+     MUSIC BUTTON
+     ▶ Replace the audio URL below (inside initMusic()) with
+       your own music file URL or any public audio URL.
+       Look for the comment: "REPLACE MUSIC URL HERE"
+============================================================== -->
+<button id="music-btn" aria-label="Toggle music">
+  <span class="music-note">🎵</span>
+  <span id="music-label">Play Music</span>
+</button>
+
+<!-- =============================================================
+     ██ SECTION 1 — LANDING HERO
+============================================================== -->
+<section id="screen-landing" class="screen">
+
+  <!-- Decorative star dots -->
+  <span class="star-deco" style="top:12%;left:8%;font-size:1.2rem;">✦</span>
+  <span class="star-deco" style="top:20%;right:10%;font-size:0.9rem;animation-delay:0.7s;">✦</span>
+  <span class="star-deco" style="bottom:18%;left:12%;font-size:0.7rem;animation-delay:1.3s;">✦</span>
+  <span class="star-deco" style="bottom:22%;right:8%;font-size:1rem;animation-delay:0.4s;">✦</span>
+
+  <div class="hero-card">
+
+    <!-- Snoopy SVG Illustration (inline, no external dep) -->
+    <div class="snoopy-hero">
+      <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Snoopy simplified outline -->
+        <!-- Body -->
+        <ellipse cx="60" cy="80" rx="28" ry="22" fill="white" stroke="#d0d0d0" stroke-width="1.5"/>
+        <!-- Head -->
+        <circle cx="60" cy="48" r="24" fill="white" stroke="#d0d0d0" stroke-width="1.5"/>
+        <!-- Ear left -->
+        <ellipse cx="42" cy="38" rx="8" ry="14" fill="#1a1a1a" transform="rotate(-15 42 38)"/>
+        <!-- Ear right -->
+        <ellipse cx="78" cy="38" rx="8" ry="14" fill="#1a1a1a" transform="rotate(15 78 38)"/>
+        <!-- Snout -->
+        <ellipse cx="67" cy="56" rx="12" ry="9" fill="#f5e6d3"/>
+        <!-- Nose -->
+        <ellipse cx="67" cy="50" rx="5" ry="3.5" fill="#1a1a1a"/>
+        <!-- Eye left -->
+        <circle cx="50" cy="44" r="3" fill="#1a1a1a"/>
+        <circle cx="51.2" cy="43" r="1" fill="white"/>
+        <!-- Eye right -->
+        <circle cx="65" cy="44" r="3" fill="#1a1a1a"/>
+        <circle cx="66.2" cy="43" r="1" fill="white"/>
+        <!-- Smile -->
+        <path d="M60 58 Q65 63 70 58" stroke="#c0a080" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        <!-- Collar + tag -->
+        <rect x="44" y="66" width="32" height="6" rx="3" fill="#4a90c4"/>
+        <circle cx="60" cy="72" r="3" fill="#fde877" stroke="#e0c800" stroke-width="0.8"/>
+        <!-- Legs / feet -->
+        <ellipse cx="47" cy="98" rx="9" ry="6" fill="#1a1a1a"/>
+        <ellipse cx="73" cy="98" rx="9" ry="6" fill="#1a1a1a"/>
+        <!-- Tail -->
+        <path d="M88 80 Q100 70 95 62" stroke="#d0d0d0" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <!-- Birthday hat -->
+        <polygon points="60,10 48,34 72,34" fill="#4a90c4" stroke="#2d6fa0" stroke-width="1"/>
+        <polygon points="60,10 50,20 70,20" fill="#fde877"/>
+        <circle cx="60" cy="10" r="3" fill="#f4718f"/>
+        <!-- Tiny sparkles around hat -->
+        <text x="73" y="18" font-size="9" fill="#fde877">✦</text>
+        <text x="38" y="22" font-size="8" fill="#f4718f">✦</text>
+      </svg>
+    </div>
+
+    <h1 class="hero-title">A Special Birthday<br/>Surprise For You 🎂</h1>
+    <p class="hero-subtitle">Someone has prepared something<br/>special for your birthday…</p>
+
+    <button class="btn-primary" id="btn-start" onclick="startJourney()">
+      ✨ Start the Magic
+    </button>
+
+    <div class="paw-row">
+      <div class="paw-dot"></div><div class="paw-dot"></div><div class="paw-dot"></div>
+      <div class="paw-dot"></div><div class="paw-dot"></div>
+    </div>
+  </div>
+</section>
+
+<!-- =============================================================
+     ██ SECTION 2 — MINI GAME
+============================================================== -->
+<section id="screen-game" class="screen hidden">
+  <div class="game-ui">
+
+    <p class="section-eyebrow">✦ Mini Challenge ✦</p>
+    <h2 class="game-title">Collect All the Hearts! 💕</h2>
+    <p class="game-subtitle">Tap each floating heart to unlock your birthday letter.</p>
+
+    <div class="progress-bar-wrap">
+      <div class="progress-bar-fill" id="progress-fill"></div>
+    </div>
+    <p class="progress-label" id="progress-label">0 / 5 Hearts Collected</p>
+
+    <div id="game-arena"></div>
+
+    <!-- Star decorations inside game card area -->
+  </div>
+</section>
+
+<!-- Popup: game won -->
+<div id="popup-game-win" class="popup-overlay hidden">
+  <div class="popup-card">
+    <span class="popup-emoji">💌</span>
+    <h3 class="popup-title">Yay! You Unlocked<br/>Your Birthday Letter!</h3>
+    <p class="popup-body">All 5 hearts collected! Your special message is ready… Click below to open it.</p>
+    <button class="btn-primary" onclick="gotoLetter()">Open the Letter 💙</button>
+  </div>
+</div>
+
+<!-- =============================================================
+     ██ SECTION 3 — LETTER / ENVELOPE
+============================================================== -->
+<section id="screen-letter" class="screen hidden">
+
+  <div class="letter-container">
+    <p class="section-eyebrow">✦ Your Birthday Letter ✦</p>
+    <h2 class="section-heading">Something Made With Love</h2>
+
+    <!-- ENVELOPE -->
+    <div class="envelope-wrap" id="envelope-wrap" onclick="openEnvelope()">
+      <div class="envelope">
+        <svg viewBox="0 0 280 190" xmlns="http://www.w3.org/2000/svg">
+          <!-- Envelope body -->
+          <rect x="2" y="2" width="276" height="186" rx="12" fill="#d4ecfa" stroke="#a8d4f5" stroke-width="2"/>
+          <!-- Envelope sides (shadow triangles) -->
+          <path d="M2 188 L140 100 L278 188 Z" fill="#b8daf0"/>
+          <path d="M2 2 L140 100 L2 188 Z" fill="#c2e0f5"/>
+          <path d="M278 2 L140 100 L278 188 Z" fill="#c2e0f5"/>
+
+          <!-- Flap (closed) — animatable via JS class -->
+          <path id="envelope-flap" d="M2 2 L140 100 L278 2 Z" fill="#a8d4f5" stroke="#88c4e8" stroke-width="1.5"
+            style="transform-origin: center top; transition: transform 0.6s cubic-bezier(.22,1,.36,1);">
+          </path>
+
+          <!-- Little heart on envelope -->
+          <text x="130" y="148" font-size="22" fill="#f4718f">♥</text>
+
+          <!-- Yellow dots decorations -->
+          <circle cx="30" cy="165" r="4" fill="#fde877"/>
+          <circle cx="44" cy="170" r="3" fill="#fde877"/>
+          <circle cx="250" cy="165" r="4" fill="#fde877"/>
+          <circle cx="236" cy="170" r="3" fill="#fde877"/>
+        </svg>
+      </div>
+      <!-- Letter paper peek out -->
+      <div class="letter-paper" id="letter-paper"></div>
+      <p class="envelope-hint" id="envelope-hint">👆 Click to open the envelope</p>
+    </div>
+
+    <!-- LETTER CARD (hidden until envelope opened) -->
+    <div class="letter-card hidden" id="letter-card">
+      <p class="letter-salutation" id="letter-salutation"></p>
+      <div class="letter-body" id="letter-body"><span class="cursor"></span></div>
+
+      <!-- =====================================================
+           📸 PHOTO GALLERY — appears after first paragraph
+           of the birthday message finishes typing.
+           The gallery is hidden by default and revealed via JS.
+      ====================================================== -->
+      <div class="photo-gallery-section hidden" id="photo-gallery">
+
+        <p class="gallery-title">Spesial untuk Momon tersayang 💙</p>
+
+        <div class="polaroid-row">
+
+          <!-- ─────────────────────────────────────────────
+               PHOTO 1 — Tilted LEFT
+               ▼ REPLACE IMAGE 1 URL HERE:
+               Change the src attribute of the <img> below
+               to the URL of your first photo.
+               Example: src="https://example.com/photo1.jpg"
+               You can also use a local file path: src="photo1.jpg"
+               Current placeholder: a soft blue placeholder image.
+          ──────────────────────────────────────────────── -->
+          <div class="polaroid-card tilt-left" onclick="openLightbox(this)">
+
+            <!-- Snoopy-themed sticker decorations -->
+            <span class="polaroid-sticker s1">🐾</span>
+            <span class="polaroid-sticker s2">⭐</span>
+            <span class="polaroid-sticker s3">💙</span>
+
+            <!-- ▼▼▼ REPLACE THE src BELOW WITH YOUR FIRST PHOTO URL ▼▼▼ -->
+            <img
+              class="polaroid-img"
+              src="https://www.image2url.com/r2/default/images/1782207232909-7cb1d9a1-32f5-4c79-a648-1c4bb3886647.jpeg"
+              alt="Memory photo 1"
+            />
+            <!-- ▲▲▲ REPLACE THE src ABOVE WITH YOUR FIRST PHOTO URL ▲▲▲ -->
+
+            <p class="polaroid-caption">Momon dengan kuenya 🌟</p>
+          </div>
+
+          <!-- ─────────────────────────────────────────────
+               PHOTO 2 — Tilted RIGHT
+               ▼ REPLACE IMAGE 2 URL HERE:
+               Change the src attribute of the <img> below
+               to the URL of your second photo.
+               Example: src="https://example.com/photo2.jpg"
+               You can also use a local file path: src="photo2.jpg"
+               Current placeholder: a soft blue placeholder image.
+          ──────────────────────────────────────────────── -->
+          <div class="polaroid-card tilt-right" onclick="openLightbox(this)">
+
+            <!-- Snoopy-themed sticker decorations -->
+            <span class="polaroid-sticker s1">🎈</span>
+            <span class="polaroid-sticker s2">🌸</span>
+            <span class="polaroid-sticker s3">✨</span>
+
+            <!-- ▼▼▼ REPLACE THE src BELOW WITH YOUR SECOND PHOTO URL ▼▼▼ -->
+            <img
+              class="polaroid-img"
+              src="https://www.image2url.com/r2/default/images/1782206925732-1ebc6234-1c85-40a3-b7dc-523921d0d6ce.jpeg"
+              alt="Memory photo 2"
+            />
+            <!-- ▲▲▲ REPLACE THE src ABOVE WITH YOUR SECOND PHOTO URL ▲▲▲ -->
+
+            <p class="polaroid-caption">Momon in her pouty face 💕</p>
+          </div>
+
+        </div><!-- /polaroid-row -->
+
+        <p class="gallery-footer">Terima kasih yaa Momon karena masih mau jadi teman aku sampai sekarang ✨</p>
+
+      </div><!-- /photo-gallery -->
+      <!-- =====================================================
+           END OF PHOTO GALLERY SECTION
+      ====================================================== -->
+
+      <p class="letter-sign hidden" id="letter-sign"></p>
+
+      <!-- Decorative dots -->
+      <div class="dots-deco">
+        <span></span><span></span><span></span>
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+
+    <!-- Thank you + hug button (hidden until letter done) -->
+    <div class="thankyou-wrap hidden" id="thankyou-wrap">
+      <p class="thankyou-quote">"Thank you for being part of my story ✨"</p>
+      <button class="btn-hug" onclick="showHugModal()">
+        One More Hug From Snoopy 🐶
+      </button>
+    </div>
+  </div>
+
+  <!-- Static decorative stars -->
+  <span class="star-deco" style="top:8%;left:6%;font-size:1rem;">✦</span>
+  <span class="star-deco" style="top:15%;right:5%;font-size:0.75rem;animation-delay:1s;">✦</span>
+  <span class="star-deco" style="bottom:10%;left:10%;font-size:0.8rem;animation-delay:0.5s;">✦</span>
+</section>
+
+<!-- =============================================================
+     ██ PHOTO LIGHTBOX MODAL
+     Opens when a polaroid photo is clicked. Closes on backdrop click.
+============================================================== -->
+<div id="photo-lightbox" class="hidden" onclick="closeLightbox(event)">
+  <div class="lightbox-inner">
+    <button class="lightbox-close" onclick="closeLightbox(null)" aria-label="Close photo">✕</button>
+    <img id="lightbox-img" src="" alt="Full photo" />
+  </div>
+</div>
+
+<!-- =============================================================
+     ██ HUG MODAL
+============================================================== -->
+<canvas class="heart-rain-canvas hidden" id="heart-rain-canvas"></canvas>
+
+<div id="hug-modal" class="popup-overlay hidden">
+  <div class="popup-card">
+    <!-- Another Snoopy hug illustration -->
+    <svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin:0 auto 1rem;display:block;">
+      <!-- Snoopy hugging a big heart -->
+      <circle cx="50" cy="38" r="20" fill="white" stroke="#d0d0d0" stroke-width="1.5"/>
+      <ellipse cx="37" cy="30" rx="6" ry="11" fill="#1a1a1a" transform="rotate(-15 37 30)"/>
+      <ellipse cx="63" cy="30" rx="6" ry="11" fill="#1a1a1a" transform="rotate(15 63 30)"/>
+      <ellipse cx="55" cy="44" rx="9" ry="7" fill="#f5e6d3"/>
+      <ellipse cx="55" cy="39" rx="4" ry="3" fill="#1a1a1a"/>
+      <circle cx="43" cy="35" r="2.5" fill="#1a1a1a"/><circle cx="44" cy="34.3" r="0.8" fill="white"/>
+      <circle cx="55" cy="35" r="2.5" fill="#1a1a1a"/><circle cx="56" cy="34.3" r="0.8" fill="white"/>
+      <!-- Arms hugging heart -->
+      <path d="M32 52 Q22 55 25 68" stroke="#d0d0d0" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <path d="M68 52 Q78 55 75 68" stroke="#d0d0d0" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <!-- Big heart -->
+      <path d="M50 82 L25 65 Q20 58 30 52 Q38 48 50 58 Q62 48 70 52 Q80 58 75 65 Z" fill="#f4718f"/>
+      <!-- Body -->
+      <ellipse cx="50" cy="55" rx="18" ry="14" fill="white" stroke="#d0d0d0" stroke-width="1.5"/>
+    </svg>
+
+    <h3 class="popup-title">Sending You the Biggest<br/>Birthday Hug Ever!</h3>
+    <p class="popup-body" style="color:var(--red-heart);font-weight:700;font-size:1.05rem;">💙</p>
+    <p class="popup-body">From Snoopy and your special someone — wishing you all the warmth and joy in the world today and always. 🐾</p>
+    <button class="btn-primary" onclick="closeHugModal()" style="margin-top:0.5rem;">
+      Close 💙
+    </button>
+  </div>
+</div>
+
+
+<!-- =============================================================
+     JAVASCRIPT
+============================================================== -->
+<script>
+  /* ============================================================
+     CONFIGURATION — edit these values to personalize
+  ============================================================ */
+  const CONFIG = {
+    // ▼ REPLACE FRIEND'S NAME HERE
+    friendName: "Momon",
+
+    // ▼ REPLACE WITH YOUR NAME HERE
+    yourName: "Ichi Ocha",
+
+    // ▼ REPLACE BIRTHDAY MESSAGE HERE (use \n for new lines)
+    message: "Selamat ulang tahun Momon! Maaf yaaa karena aku ucapinnya beneran se-TELAT ini huhuhuhu. Aku harap kamu masih mau menerima ucapan aku yaaaa, Momon. 🌟\n\nHappy Birthday! 🎂💙\n\nSemoga di umur yang baru ini kamu selalu diberikan kesehatan, kebahagiaan, dan banyak hal baik yang datang menghampiri kamu. Semoga semua yang sedang kamu usahakan bisa berjalan lancar, satu per satu impianmu bisa terwujud, dan semoga kamu selalu dikelilingi oleh orang-orang yang sayang dan peduli sama kamu.\n\nTerima kasih ya karena sudah menjadi Momon yang aku kenal selama ini. Semoga kamu tetap menjadi pribadi yang hangat, baik, dan menyenangkan seperti sekarang. Jangan lupa untuk lebih sering mengapresiasi diri sendiri juga, karena sejauh ini kamu sudah berjuang dan bertahan dengan sangat baik.\n\nAku mungkin telat mengucapkannya, tapi doa baiknya tetap sama besarnya. Semoga tahun ini membawa lebih banyak tawa, kenangan indah, kesempatan baru, dan hal-hal yang membuat kamu bahagia.\n\nSekali lagi, selamat ulang tahun ya, Momon! Semoga harimu menyenangkan dan tahun ini menjadi salah satu tahun terbaik dalam hidupmu. 🫶🏻✨"
+  };
+
+  /* ============================================================
+     MUSIC
+     ▼ REPLACE MUSIC URL HERE with your own audio file URL.
+       Example (lo-fi/chill/happy birthday music):
+       const MUSIC_URL = 'https://your-domain.com/happy-birthday.mp3';
+       Or use a public mp3 from the web.
+  ============================================================ */
+  const MUSIC_URL = 'https://cdn.jsdelivr.net/gh/rachelklm/birthdaysong@main/nastelbom-happy-birthday-469282.mp3'; // ← REPLACE THIS URL
+
+  /* ============================================================
+     STATE
+  ============================================================ */
+  let heartsCollected = 0;
+  const TOTAL_HEARTS = 5;
+  let audio = null;
+  let musicPlaying = false;
+  let confettiAnimId = null;
+  let heartRainAnimId = null;
+  let envelopeOpened = false;
+
+  /* ============================================================
+     BACKGROUND PARTICLES
+  ============================================================ */
+  function spawnParticles() {
+    const container = document.getElementById('bg-particles');
+    const colors = ['#a8d4f5','#c9e8fc','#fde877','#f4718f','#ffffff'];
+    for (let i = 0; i < 30; i++) {
+      const p = document.createElement('div');
+      p.className = 'particle';
+      const size = Math.random() * 10 + 4;
+      p.style.cssText = `
+        width:${size}px; height:${size}px;
+        left:${Math.random()*100}%;
+        top:${Math.random()*100}%;
+        background:${colors[Math.floor(Math.random()*colors.length)]};
+        animation-duration:${Math.random()*14+8}s;
+        animation-delay:${Math.random()*10}s;
+      `;
+      container.appendChild(p);
+    }
+  }
+  spawnParticles();
+
+  /* ============================================================
+     MUSIC PLAYER
+  ============================================================ */
+  function initMusic() {
+    if (audio) return;
+    audio = new Audio(MUSIC_URL); // ← audio source uses MUSIC_URL above
+    audio.loop = true;
+    audio.volume = 0.45;
+  }
+
+  document.getElementById('music-btn').addEventListener('click', () => {
+    initMusic();
+    if (musicPlaying) {
+      audio.pause();
+      musicPlaying = false;
+      document.getElementById('music-label').textContent = 'Play Music';
+      document.querySelector('.music-note').textContent = '🎵';
+    } else {
+      audio.play().catch(() => {});
+      musicPlaying = true;
+      document.getElementById('music-label').textContent = 'Pause Music';
+      document.querySelector('.music-note').textContent = '🎶';
+    }
+  });
+
+  /* ============================================================
+     SCREEN TRANSITIONS
+  ============================================================ */
+  function showScreen(id) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.add('hidden'));
+    const el = document.getElementById(id);
+    el.classList.remove('hidden');
+    el.classList.add('fade-in');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  /* ============================================================
+     LANDING → GAME
+  ============================================================ */
+  function startJourney() {
+    // Try to start music on first interaction
+    initMusic();
+    audio && audio.play().catch(() => {});
+    musicPlaying = true;
+    document.getElementById('music-label').textContent = 'Pause Music';
+
+    showScreen('screen-game');
+    setTimeout(spawnGameHearts, 400);
+  }
+
+  /* ============================================================
+     MINI GAME — Hearts
+  ============================================================ */
+  const heartEmojis = ['💙','💕','💗','💖','💝'];
+
+  function spawnGameHearts() {
+    const arena = document.getElementById('game-arena');
+    arena.innerHTML = '';
+    heartsCollected = 0;
+    updateProgress();
+
+    for (let i = 0; i < TOTAL_HEARTS; i++) {
+      spawnHeart(i, arena);
+    }
+  }
+
+  function spawnHeart(index, arena) {
+    const h = document.createElement('div');
+    h.className = 'heart-target';
+    h.textContent = heartEmojis[index % heartEmojis.length];
+    h.dataset.index = index;
+
+    // Random position within arena bounds
+    const arenaW = arena.offsetWidth  || 400;
+    const arenaH = arena.offsetHeight || 300;
+    const x = 10 + Math.random() * (arenaW - 70);
+    const y = 10 + Math.random() * (arenaH - 70);
+
+    h.style.left = x + 'px';
+    h.style.top  = y + 'px';
+    // Staggered bounce duration
+    h.style.setProperty('--dur', (2.2 + Math.random() * 2) + 's');
+    h.style.animationDelay = (Math.random() * 1.5) + 's';
+
+    h.addEventListener('click', () => collectHeart(h));
+    arena.appendChild(h);
+  }
+
+  function collectHeart(el) {
+    if (el.classList.contains('collected')) return;
+    el.classList.add('collected');
+
+    // Sparkle burst at position
+    spawnSparkle(el);
+
+    heartsCollected++;
+    updateProgress();
+
+    if (heartsCollected >= TOTAL_HEARTS) {
+      setTimeout(() => {
+        launchConfetti();
+        setTimeout(() => showGameWinPopup(), 600);
+      }, 500);
+    }
+  }
+
+  function updateProgress() {
+    const pct = (heartsCollected / TOTAL_HEARTS) * 100;
+    document.getElementById('progress-fill').style.width = pct + '%';
+    document.getElementById('progress-label').textContent =
+      `${heartsCollected} / ${TOTAL_HEARTS} Hearts Collected`;
+  }
+
+  function spawnSparkle(target) {
+    const arena = document.getElementById('game-arena');
+    const rect = target.getBoundingClientRect();
+    const arenaRect = arena.getBoundingClientRect();
+
+    const burst = document.createElement('div');
+    burst.className = 'sparkle-burst';
+    burst.style.left = (rect.left - arenaRect.left - 4) + 'px';
+    burst.style.top  = (rect.top  - arenaRect.top  - 4) + 'px';
+    burst.innerHTML = `
+      <svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+        <g fill="#fde877" opacity="0.9">
+          <circle cx="30" cy="5" r="3"><animate attributeName="cy" from="30" to="5" dur="0.4s" fill="freeze"/><animate attributeName="opacity" from="1" to="0" begin="0.25s" dur="0.2s" fill="freeze"/></circle>
+          <circle cx="55" cy="30" r="3"><animate attributeName="cx" from="30" to="55" dur="0.4s" fill="freeze"/><animate attributeName="opacity" from="1" to="0" begin="0.25s" dur="0.2s" fill="freeze"/></circle>
+          <circle cx="30" cy="55" r="3"><animate attributeName="cy" from="30" to="55" dur="0.4s" fill="freeze"/><animate attributeName="opacity" from="1" to="0" begin="0.25s" dur="0.2s" fill="freeze"/></circle>
+          <circle cx="5" cy="30" r="3"><animate attributeName="cx" from="30" to="5" dur="0.4s" fill="freeze"/><animate attributeName="opacity" from="1" to="0" begin="0.25s" dur="0.2s" fill="freeze"/></circle>
+        </g>
+        <text x="18" y="36" font-size="18" fill="#f4718f">✦</text>
+      </svg>`;
+    arena.appendChild(burst);
+    setTimeout(() => burst.remove(), 500);
+  }
+
+  function showGameWinPopup() {
+    document.getElementById('popup-game-win').classList.remove('hidden');
+  }
+
+  /* ============================================================
+     GAME → LETTER
+  ============================================================ */
+  function gotoLetter() {
+    document.getElementById('popup-game-win').classList.add('hidden');
+    showScreen('screen-letter');
+  }
+
+  /* ============================================================
+     ENVELOPE OPEN
+  ============================================================ */
+  function openEnvelope() {
+    if (envelopeOpened) return;
+    envelopeOpened = true;
+
+    const wrap = document.getElementById('envelope-wrap');
+    const flap = document.getElementById('envelope-flap');
+    const hint = document.getElementById('envelope-hint');
+
+    // Animate flap open
+    flap.style.transform = 'rotateX(180deg)';
+    wrap.classList.add('opened');
+    hint.style.display = 'none';
+
+    // Trigger second confetti burst
+    setTimeout(() => launchConfetti(), 300);
+
+    // Show letter card and start typing
+    setTimeout(() => {
+      document.getElementById('letter-card').classList.remove('hidden');
+      document.getElementById('letter-card').classList.add('fade-in');
+      startTypingAnimation();
+    }, 700);
+  }
+
+  /* ============================================================
+     TYPING ANIMATION
+  ============================================================ */
+  function startTypingAnimation() {
+    const salutationEl = document.getElementById('letter-salutation');
+    const bodyEl       = document.getElementById('letter-body');
+    const signEl       = document.getElementById('letter-sign');
+
+    const salutation = `Dear ${CONFIG.friendName},`;
+    const body       = CONFIG.message;
+    const signature  = `With love,\n${CONFIG.yourName}`;
+
+    // Split body into first paragraph and the rest
+    // so the gallery can appear after paragraph 1 finishes.
+    const paragraphs     = body.split('\n\n');
+    const firstPara      = paragraphs[0];
+    const remainingParas = paragraphs.slice(1).join('\n\n');
+
+    // Type salutation first
+    typeText(salutationEl, salutation, 55, () => {
+      // Type first paragraph
+      bodyEl.innerHTML = '<span class="cursor"></span>';
+      typeText(bodyEl, firstPara, 28, () => {
+
+        // ── Reveal photo gallery after first paragraph ──
+        const gallery = document.getElementById('photo-gallery');
+        gallery.classList.remove('hidden');
+        gallery.classList.add('fade-in');
+
+        // Small pause then continue with rest of message
+        setTimeout(() => {
+          // Append a double-newline separator then continue typing
+          typeText(bodyEl, '\n\n' + remainingParas, 28, () => {
+            // Remove cursor
+            const cur = bodyEl.querySelector('.cursor');
+            if (cur) cur.remove();
+
+            // Show signature
+            setTimeout(() => {
+              signEl.classList.remove('hidden');
+              signEl.innerHTML = signature.replace(/\n/g, '<br>');
+              signEl.style.opacity = '1';
+
+              // After signature shown, display thank you
+              setTimeout(() => {
+                document.getElementById('thankyou-wrap').classList.remove('hidden');
+                document.getElementById('thankyou-wrap').classList.add('fade-in');
+              }, 1200);
+            }, 500);
+          });
+        }, 900);
+      });
+    });
+  }
+
+  /* ============================================================
+     PHOTO LIGHTBOX
+  ============================================================ */
+  function openLightbox(cardEl) {
+    const img = cardEl.querySelector('.polaroid-img');
+    const lightbox = document.getElementById('photo-lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    lightboxImg.src = img.src;
+    lightboxImg.alt = img.alt;
+    lightbox.classList.remove('hidden');
+    // Prevent body scroll while open
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox(event) {
+    // Close only if clicking the backdrop (not the inner image)
+    if (event && event.target !== document.getElementById('photo-lightbox') &&
+        !event.target.classList.contains('lightbox-close')) {
+      return;
+    }
+    const lightbox = document.getElementById('photo-lightbox');
+    lightbox.classList.add('hidden');
+    document.body.style.overflow = '';
+  }
+
+  function typeText(el, text, speed, onDone) {
+    // Support \n → <br>
+    const chars = text.split('');
+    let i = 0;
+    let displayed = '';
+
+    function tick() {
+      if (i >= chars.length) {
+        if (onDone) onDone();
+        return;
+      }
+      const ch = chars[i];
+      if (ch === '\n') {
+        displayed += '<br>';
+      } else {
+        displayed += ch;
+      }
+      // Keep cursor at end for body element
+      if (el.id === 'letter-body') {
+        el.innerHTML = displayed + '<span class="cursor"></span>';
+      } else {
+        el.innerHTML = displayed;
+      }
+      i++;
+      setTimeout(tick, speed + Math.random() * 20);
+    }
+    tick();
+  }
+
+  /* ============================================================
+     CONFETTI (canvas-based)
+  ============================================================ */
+  const confettiCanvas = document.getElementById('confetti-canvas');
+  const confettiCtx = confettiCanvas.getContext('2d');
+  let confettiPieces = [];
+
+  function resizeConfetti() {
+    confettiCanvas.width  = window.innerWidth;
+    confettiCanvas.height = window.innerHeight;
+  }
+  window.addEventListener('resize', resizeConfetti);
+  resizeConfetti();
+
+  function launchConfetti() {
+    const colors = ['#a8d4f5','#fde877','#f4718f','#c9e8fc','#fff','#4a90c4','#f9a8c0'];
+    for (let i = 0; i < 120; i++) {
+      confettiPieces.push({
+        x: Math.random() * confettiCanvas.width,
+        y: -10 - Math.random() * 200,
+        w: Math.random() * 10 + 5,
+        h: Math.random() * 6 + 3,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        speed: Math.random() * 4 + 2,
+        angle: Math.random() * Math.PI * 2,
+        spin:  (Math.random() - 0.5) * 0.2,
+        sway:  Math.random() * 2 - 1,
+        alpha: 1,
+      });
+    }
+    if (!confettiAnimId) animateConfetti();
+  }
+
+  function animateConfetti() {
+    confettiCtx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+    confettiPieces = confettiPieces.filter(p => p.alpha > 0);
+
+    confettiPieces.forEach(p => {
+      p.y     += p.speed;
+      p.x     += p.sway * 0.5;
+      p.angle += p.spin;
+      if (p.y > confettiCanvas.height - 60) p.alpha -= 0.03;
+
+      confettiCtx.save();
+      confettiCtx.globalAlpha = p.alpha;
+      confettiCtx.translate(p.x, p.y);
+      confettiCtx.rotate(p.angle);
+      confettiCtx.fillStyle = p.color;
+      confettiCtx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
+      confettiCtx.restore();
+    });
+
+    if (confettiPieces.length > 0) {
+      confettiAnimId = requestAnimationFrame(animateConfetti);
+    } else {
+      confettiAnimId = null;
+      confettiCtx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+    }
+  }
+
+  /* ============================================================
+     HUG MODAL
+  ============================================================ */
+  function showHugModal() {
+    document.getElementById('hug-modal').classList.remove('hidden');
+    startHeartRain();
+  }
+
+  function closeHugModal() {
+    document.getElementById('hug-modal').classList.add('hidden');
+    stopHeartRain();
+  }
+
+  /* ============================================================
+     HEART RAIN
+  ============================================================ */
+  const heartRainCanvas = document.getElementById('heart-rain-canvas');
+  const heartRainCtx = heartRainCanvas.getContext('2d');
+  let heartRainPieces = [];
+
+  function resizeHeartRain() {
+    heartRainCanvas.width  = window.innerWidth;
+    heartRainCanvas.height = window.innerHeight;
+  }
+  window.addEventListener('resize', resizeHeartRain);
+  resizeHeartRain();
+
+  function startHeartRain() {
+    heartRainCanvas.classList.remove('hidden');
+    heartRainPieces = [];
+
+    // Spawn hearts continuously
+    function spawnBatch() {
+      const colors = ['#f4718f','#f9a8c0','#4a90c4','#a8d4f5','#fde877'];
+      for (let i = 0; i < 8; i++) {
+        heartRainPieces.push({
+          x: Math.random() * heartRainCanvas.width,
+          y: -30 - Math.random() * 100,
+          size: Math.random() * 24 + 12,
+          speed: Math.random() * 2.5 + 1.2,
+          sway: Math.random() * 1.5 - 0.75,
+          alpha: 0.85 + Math.random() * 0.15,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          rot: Math.random() * 0.4 - 0.2,
+          angle: 0,
+        });
+      }
+    }
+
+    spawnBatch();
+    const spawner = setInterval(() => {
+      if (!heartRainPieces) { clearInterval(spawner); return; }
+      spawnBatch();
+    }, 350);
+    heartRainCanvas._spawner = spawner;
+
+    animateHeartRain();
+  }
+
+  function stopHeartRain() {
+    clearInterval(heartRainCanvas._spawner);
+    cancelAnimationFrame(heartRainAnimId);
+    heartRainAnimId = null;
+    heartRainPieces = [];
+    heartRainCtx.clearRect(0, 0, heartRainCanvas.width, heartRainCanvas.height);
+    heartRainCanvas.classList.add('hidden');
+  }
+
+  function drawHeart(ctx, x, y, size) {
+    ctx.beginPath();
+    ctx.moveTo(x, y + size * 0.3);
+    ctx.bezierCurveTo(x, y, x - size * 0.5, y, x - size * 0.5, y + size * 0.35);
+    ctx.bezierCurveTo(x - size * 0.5, y + size * 0.7, x, y + size * 0.95, x, y + size);
+    ctx.bezierCurveTo(x, y + size * 0.95, x + size * 0.5, y + size * 0.7, x + size * 0.5, y + size * 0.35);
+    ctx.bezierCurveTo(x + size * 0.5, y, x, y, x, y + size * 0.3);
+    ctx.closePath();
+    ctx.fill();
+  }
+
+  function animateHeartRain() {
+    heartRainCtx.clearRect(0, 0, heartRainCanvas.width, heartRainCanvas.height);
+    heartRainPieces = heartRainPieces.filter(p => p.y < heartRainCanvas.height + 60);
+
+    heartRainPieces.forEach(p => {
+      p.y += p.speed;
+      p.x += p.sway * 0.6;
+      p.angle += p.rot;
+
+      heartRainCtx.save();
+      heartRainCtx.globalAlpha = p.alpha;
+      heartRainCtx.fillStyle = p.color;
+      heartRainCtx.translate(p.x, p.y);
+      heartRainCtx.rotate(p.angle);
+      drawHeart(heartRainCtx, -p.size/2, -p.size/2, p.size);
+      heartRainCtx.restore();
+    });
+
+    heartRainAnimId = requestAnimationFrame(animateHeartRain);
+  }
+
+  /* ============================================================
+     REDUCED MOTION SUPPORT
+  ============================================================ */
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.documentElement.style.setProperty('--dur','0.01s');
+  }
+</script>
+
+</body>
+</html>
